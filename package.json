@@ -2,7 +2,7 @@
   "name": "photo2text",
   "version": "1.0.0",
   "description": "",
-  "homepage": "",
+  "homepage": "./",
   "main": "index.js",
   "scripts": {
     "start": "cross-env PORT=10888 react-scripts start",
