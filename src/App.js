@@ -11,12 +11,8 @@ class App extends React.Component {
 
 		this.state = {
 			activePanel: 'home',
-<<<<<<< HEAD
-			qrResult: null,
-=======
 			fetchedUser: null,
 			fileUpload: null
->>>>>>> 84f278f17b3abc831bd9fb56eb49512fcaa0f25b
 		};
 	}
 
