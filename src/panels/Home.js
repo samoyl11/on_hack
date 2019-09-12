@@ -2,18 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListItem, Button, Group, Div, Avatar, PanelHeader } from '@vkontakte/vkui';
 
-const Home = ({ id, go, fetchedUser }) => (
+const Home = ({ id, go }) => (
 	<Panel id={id}>
 		<PanelHeader>Example</PanelHeader>
-		{fetchedUser &&
-		<Group title="User Data Fetched with VK Connect">
-			<ListItem
-				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
-				description={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}
-			>
-				{`${fetchedUser.first_name} ${fetchedUser.last_name}`}
-			</ListItem>
-		</Group>}
 
 		<Group title="Navigation Example">
 			<Div>

@@ -12,21 +12,22 @@ class App extends React.Component {
 
 		this.state = {
 			activePanel: 'home',
-			fetchedUser: null,
+			qrResult: null,
 		};
 	}
 
 	componentDidMount() {
 		connect.subscribe((e) => {
 			switch (e.detail.type) {
-				case 'VKWebAppGetUserInfoResult':
-					this.setState({ fetchedUser: e.detail.data });
+				case 'VKWebAppOpenQRResult':
+					this.setState({ qrResult: e.detail.qr_data });
+					console.log(e.detail.qr_data);
 					break;
 				default:
 					console.log(e.detail.type);
 			}
 		});
-		connect.send('VKWebAppGetUserInfo', {});
+		connect.send('VKWebAppOpenQR');
 	}
 
 	go = (e) => {
@@ -36,7 +37,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<View activePanel={this.state.activePanel}>
-				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} />
+				<Home id="home" go={this.go} />
 				<Persik id="persik" go={this.go} />
 			</View>
 		);
