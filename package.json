@@ -20,7 +20,11 @@
   },
   "dependencies": {
     "@vkontakte/icons": "^1.8.2",
+<<<<<<< HEAD
     "@vkontakte/vk-connect": "^1.5.6",
+=======
+    "@vkontakte/vk-connect": "^1.5.5",
+>>>>>>> 84f278f17b3abc831bd9fb56eb49512fcaa0f25b
     "@vkontakte/vkui": "^2.28.2",
     "@vkontakte/vkui-connect": "^1.5.4",
     "babel-eslint": "^9.0.0",

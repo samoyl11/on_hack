@@ -1,32 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Panel, ListItem, Button, Group, Div, Avatar, PanelHeader } from '@vkontakte/vkui';
+import { Panel, Group, Div, Avatar, PanelHeader, View, CellButton, ListItem, Button, File, FormLayout } from '@vkontakte/vkui';
 
+<<<<<<< HEAD
 const Home = ({ id, go }) => (
 	<Panel id={id}>
 		<PanelHeader>Example</PanelHeader>
+=======
+>>>>>>> 84f278f17b3abc831bd9fb56eb49512fcaa0f25b
 
-		<Group title="Navigation Example">
-			<Div>
-				<Button size="xl" level="2" onClick={go} data-to="persik">
-					Show me the Persik, please
-				</Button>
-			</Div>
-		</Group>
-	</Panel>
+const Home = ({ id, go, fetchedUser, handle }) => (
+		<Panel id={id}>
+			<PanelHeader>Photo2Text</PanelHeader>
+			<Group>
+				<Div>
+					<FormLayout>
+						<File size="xl" level="secondary" onChange={handle} />
+					</FormLayout>
+				</Div>
+				<Div>
+					<Button top="Галерея" size="xl" level="2" onClick={go} data-to="persik">
+						Галерея
+					</Button>
+				</Div>
+			</Group>
+		</Panel>
 );
-
-Home.propTypes = {
-	id: PropTypes.string.isRequired,
-	go: PropTypes.func.isRequired,
-	fetchedUser: PropTypes.shape({
-		photo_200: PropTypes.string,
-		first_name: PropTypes.string,
-		last_name: PropTypes.string,
-		city: PropTypes.shape({
-			title: PropTypes.string,
-		}),
-	}),
-};
 
 export default Home;
