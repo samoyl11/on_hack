@@ -1,7 +1,10 @@
 import React from 'react';
+import connect from '@vkontakte/vkui-connect';
 import { View } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+
 import Home from './panels/Home';
+import Persik from './panels/Persik';
 import Scaner from './panels/QrScaner';
 
 class App extends React.Component {
@@ -10,24 +13,32 @@ class App extends React.Component {
 
 		this.state = {
 			activePanel: 'home',
-			fileUpload: null
+			fetchedUser: null,
 		};
+	}
+
+	componentDidMount() {
+		connect.subscribe((e) => {
+			switch (e.detail.type) {
+				case 'VKWebAppGetUserInfoResult':
+					this.setState({ fetchedUser: e.detail.data });
+					break;
+				default:
+					console.log(e.detail.type);
+			}
+		});
+		connect.send('VKWebAppGetUserInfo', {});
 	}
 
 	go = (e) => {
 		this.setState({ activePanel: e.currentTarget.dataset.to })
 	};
 
-	handle = (e) => {
-		e.preventDefault();
-		this.setState({ fileUpload: e.target.value });
-	}
-
 	render() {
 		return (
 			<View activePanel={this.state.activePanel}>
-				<Home id="home" go={this.go} handle={this.handle} />
-				<Scaner id="scaner" go={this.go} />
+				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} />
+				<Scaner id="scaner" go={this.go}/>
 			</View>
 		);
 	}

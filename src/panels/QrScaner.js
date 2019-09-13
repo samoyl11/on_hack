@@ -1,7 +1,7 @@
 import React from 'react';
-import connect from '@vkontakte/vkui-connect';
+import connect from '@vkontakte/vk-connect';
 import '@vkontakte/vkui/dist/vkui.css';
-import {Panel, Group, Div, PanelHeader, HeaderButton, platform, IOS} from '@vkontakte/vkui';
+import {Panel, Group, Div, PanelHeader, HeaderButton, ListItem, platform, IOS} from '@vkontakte/vkui';
 import './Persik.css';
 import persik from '../img/persik.png';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
@@ -16,50 +16,25 @@ class Scaner extends React.Component {
 
     this.state = {
       props: props,
-      qrResult: 111,
+      qrData: 111,
       qrType: 111,
-      allData: 111
     };
   }
 
-  // componentDidMount() {
-  // 	connect.subscribe((e) => {
-  // 		switch (e.detail.type) {
-  // 			case 'VKWebAppOpenQRResult':
-  // 				this.setState({
-  //           qrResult: e.detail.qr_data,
-  //           qrType: e.detail.type,
-  //           allData: e.detail
-  //         });
-  // 				break;
-  // 			default:
-  // 				console.log(e.detail.type);
-  // 		}
-  // 	});
-  //   connect.send('VKWebAppOpenQR');
-  //   // if (connect.supports("VKWebAppOpenQR"))
-  //   // {
-  //   //     connect.send('VKWebAppOpenQR');
-  //   // }
-  // }
+  componentDidMount() {
+		connect.subscribe((e) => {
+			switch (e.detail.type) {
+				case 'VKWebAppOpenQRResult':
+					this.setState({ qrData: e.detail.data.qr_data });
+					break;
+				default:
+					console.log(e.detail.type);
+			}
+		});
+    connect.send('VKWebAppOpenQR');
+	}
 
   render(){
-    connect.subscribe((e) => {
-  		switch (e.detail.type) {
-  			case 'VKWebAppOpenQRResult':
-  				this.setState({
-            qrResult: e.detail.qr_data,
-            qrType: e.detail.type,
-            allData: e.detail
-          });
-  				break;
-  			default:
-  				console.log(e.detail);
-  		}
-  	});
-
-    connect.send('VKWebAppOpenQR');
-    console.log(this.allData);
     return (
       <Panel id={this.props.id}>
     		<PanelHeader
@@ -70,10 +45,10 @@ class Scaner extends React.Component {
     			Persik
     		</PanelHeader>
     		<img className="Persik" src={persik} alt="Persik The Cat"/>
-        <Group>
-          <Div>
-              Persik The Cat {this.allData || 'Unknown'}
-          </Div>
+        <Group title="QR Data Fetched with VK Connect">
+          {this.state.qrData && <ListItem>
+            {`DDDATA ${this.state.qrData}`}
+          </ListItem>}
         </Group>
     	</Panel>
     );

@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\usepackage[T2A]{fontenc} % кодировка
+\usepackage[utf8]{inputenc} % кодировка исходного текста
+\usepackage[english,russian]{babel} % локализация и переносы
+\newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
+\usepackage{hyperref} 
+\usepackage{xcolor}
+\topmargin -.5in
+\textheight 9in
+\oddsidemargin -.25in
+\evensidemargin -.25in
+\textwidth 7in
+
+\begin{document}
+
+\title{Задание к хакатону}
+\maketitle
+
+\medskip
+\section*{Планы на подготовку}
+\href{https://vk.com/@vkappsdev-quick-start}{\textcolor{blue}{Быстрыф старт с VK Mini App}}
+\section{Распознавание голоса, {Булат, Максим, Саша}}
+
+\begin{enumerate}
+
+\item \href{https://www.youtube.com/watch?v=JpS0LzEWr-4}{\textcolor{blue}{ODS dlcourse.ai}} Не особо подробная лекция, не особо внятный лектор 
+\item \href{https://www.youtube.com/watch?v=eke2h9fGtu0}{\textcolor{blue}{Выступление человека из МФТИ}} также в описании к ролику приложена ссылка на \href{https://github.com/nsu-ai-team/voxforge_ru_sphinx_experiments}{\textcolor{blue}{github}}. Необходимо разобраться и потестить как работает их решение
+\item \href{https://www.youtube.com/playlist?list=PL0Ks75aof3ThkitsZbUOEQg7Ybl5kB_s3}{\textcolor{blue}{Лекции ФИВТ}} 21, 23, 25. Довольно подробно разбирается теория, также можно посмотреть домашки по курсу доступные в описании под видео
+
+\end{enumerate}
+
+\section{NLP, {Булат, Максим, Саша}}
+\begin{enumerate}
+
+\item \textcolor{red}{TODO:} разобарться с тем как лучше всего распознавать команды. Команд будет довольно мало и ожидается, что они будут сильно отличаться. Проблема возникает тогда, когда необходимо отличить название одной картины от другой
+
+\end{enumerate}
+
+\section{Backend, {Матвей}}
+
+\begin{enumerate}
+
+\item Рассчеты нейронки будут запускаться при вызове метода api, который будет callback ом возвращать рассчеты и результат. Это все сделает Матвей на голом flask 
+
+\item Если кому-то интересно понимать , что будет происходить на бэке \href{https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world}{\textcolor{blue}{Курс грустного мужика}}
+\item Обработка результаты прохождения формы
+\item Ассинхронность 
+
+
+\end{enumerate}
+
+\section{Frontend}
+\begin{enumerate}
+\item Сделать анимацию ожидания при обработке запроса сервером 
+
+\item  Экран формы для прохождения теста за стикеры
+
+\item Всплывающая панелька информации о картинах с возможностью прослушать аудио, полистать фоточки и почитать текст
+
+\item Чатик с ботом, где есть две кнопки:  записать аудио и сфотографировать QR с помощью  \href{https://vk.com/dev/vk_apps_docs}{\textcolor{blue}{VK UI Connect}}
+\end{enumerate}
+\section{Design + Презентация}
+\begin{enumerate}
+
+\item  Подумать над тем как это все будет выглядеть и нарисать это в какую-нибуть презентацию.
+
+\item Научиться делать 
+
+
+\end{enumerate}
+\section{Стикеры}
+
+\begin{enumerate}
+
+\item Договориться с кем-нибудь на счет стикеров
+
+\end{enumerate}
+\section{Сервер}
+
+\begin{enumerate}
+
+\item Найти сервер минимальной стоимости и запустить на нем что-нибудь простое 
+
+\end{enumerate}
+
+\section*{Задачи}
+
+\begin{enumerate}
+
+\item 
+
+\item 
+
+\end{enumerate}
+ 
+\end{document}
