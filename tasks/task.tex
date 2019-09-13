@@ -5,34 +5,119 @@
 \newcommand{\numpy}{{\tt numpy}}    % tt font for numpy
 \usepackage{hyperref} 
 \usepackage{xcolor}
-\topmargin -.5in
-\textheight 9in
-\oddsidemargin -.25in
-\evensidemargin -.25in
-\textwidth 7in
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{positioning}
+
+
+\tikzset{
+    state/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           minimum height=2em,
+           inner sep=2pt,
+           text centered,
+           },
+}
+
 
 \begin{document}
 
-\title{Задание к хакатону}
+\title{Кабанчик Колокольчик}
 \maketitle
 
-\medskip
 \section*{Планы на подготовку}
-\href{https://vk.com/@vkappsdev-quick-start}{\textcolor{blue}{Быстрыф старт с VK Mini App}}
+
+\href{https://vk.com/@vkappsdev-quick-start}{\textcolor{blue}{Быстрыф старт с VK Mini App}}. Также всем необходимо стать админами в \href{vk.com/app7119135}{\textcolor{blue}{VK Mini App}} и форкнуть \href{https://github.com/maximzubkov/on_hack}{\textcolor{blue}{GitHub}}
 \section{Распознавание голоса, {Булат, Максим, Саша}}
 
-\begin{enumerate}
+\
 
-\item \href{https://www.youtube.com/watch?v=JpS0LzEWr-4}{\textcolor{blue}{ODS dlcourse.ai}} Не особо подробная лекция, не особо внятный лектор 
-\item \href{https://www.youtube.com/watch?v=eke2h9fGtu0}{\textcolor{blue}{Выступление человека из МФТИ}} также в описании к ролику приложена ссылка на \href{https://github.com/nsu-ai-team/voxforge_ru_sphinx_experiments}{\textcolor{blue}{github}}. Необходимо разобраться и потестить как работает их решение
-\item \href{https://www.youtube.com/playlist?list=PL0Ks75aof3ThkitsZbUOEQg7Ybl5kB_s3}{\textcolor{blue}{Лекции ФИВТ}} 21, 23, 25. Довольно подробно разбирается теория, также можно посмотреть домашки по курсу доступные в описании под видео
+Задача распознавания голоса является одной из наиболее сложных, в проекте, поэтому желательно максимально подготовиться и посмотреть как можно больше методов. В идеале хочется, чтобы на все подзадачи уже имелись готовые решения и датасеты.
+
+Пайплайн будет следующий:
+
+\begin{center}
+\begin{tikzpicture}[->,>=stealth']
+
+ % First node
+ % Use previously defined 'state' as layout (see above)
+ % use tabular for content to get columns/rows
+ % parbox to limit width of the listing
+ \node[state] (soundGet) 
+ {\begin{tabular}{l}
+  \textbf{Получение голосовухи}\\
+ \end{tabular}};
+
+ % {Отчистка звука}
+ \node[state,       % layout (defined above)
+ node distance=1.5cm,     % distance to QUERY
+ below of=soundGet        % Position is to the right of QUERY
+] (soundClear)    % move 3cm in y
+ {%                     % posistion relative to the center of the 'box'
+ \begin{tabular}{l}     % content
+  \textbf{Отчистка звука}\\
+ \end{tabular}
+ };
+
+ % {Выделение морфем}
+ \node[state,
+ below of=soundClear,
+ node distance=1.5cm] (morfolize) 
+ {%
+ \begin{tabular}{l}
+  \textbf{Выделение морфем}\\
+ \end{tabular}
+ };
+
+ % STATE EPC
+ \node[state,
+ below of=morfolize,
+ node distance=2cm] (NLP) 
+ {%
+ \begin{tabular}{l}
+  \textbf{NLP}\\
+  \parbox{5cm}{Из полученных морфем сделать слова и слова преобразовать в команды}
+ \end{tabular}
+ };
+
+ % draw the paths and and print some Text below/above the graph
+ \path (soundGet) edge node[anchor=south,above,text width=4cm]
+                   {
+                   } (soundClear)
+ (soundClear) edge                    (morfolize)
+  (morfolize) edge                    (NLP)
+
+ ;
+\end{tikzpicture}
+
+\end{center}
+
+Рассмотрим каждый из пунктов подробнее:
+\begin{enumerate}
+\item В первую очередь необходимо с помощью фронтенда научиться получать голосовуху и отправлять ее на сервер. Этим займутся Максим и Матвей и это необходимо научиться делать до хакатона.
+\item После разложения сигнала голосовухи в ДФТ получится картинка, подробнее в пункте 3. в секции полезные ссылки, необходимо обучить модель, которая сможет максимально отчистить картринку от шума, довольно подробно о процессе обучения сказано в пункте 2. в секции полезные ссылки. Этим также лучше заняться до хакатона. Этим займется Саша
+\item Отчищенный спектр будет подаваться на вход большой и сложной машине, которая выделяет морфемы из спектрограммы, как это делается описано в пункте 2. в секции полезные ссылки. Очень хотелось бы найти готовое решение этой задачи
+\item Кажется, что на вход системе будет подаваться ограниченное число команд, выделяется следющие интены:\begin{enumerate}
+\item Как мне добраться до название картины / выхода из музея / туалета / раздевалки
+\item Расскажи мне про название картины
+\item Когда близжайшая экскурсия
+\item Какие сейчас работают выставки 
+\end{enumerate}
+
+Основная проблема заключается в том, чтобы распознать до какой именно картины хочет добраться пользователь. Ответ на этот вопрос частично дали на \href{https://opendatascience.slack.com/archives/C04N3UMSL/p1568308189002800}{\textcolor{blue}{ODS}}. Этим займутся Булат и Саша, при этом очень прошу \colorbox{red}{Булата} извлечь максимально сути из дискуссии на ODS и переписать эту суть сюда
+
 
 \end{enumerate}
 
-\section{NLP, {Булат, Максим, Саша}}
+Важные ссылки:
 \begin{enumerate}
-
-\item \textcolor{red}{TODO:} разобарться с тем как лучше всего распознавать команды. Команд будет довольно мало и ожидается, что они будут сильно отличаться. Проблема возникает тогда, когда необходимо отличить название одной картины от другой
+\item \href{https://www.youtube.com/watch?v=JpS0LzEWr-4}{\textcolor{blue}{ODS dlcourse.ai}} Не особо подробная лекция, не особо внятный лектор 
+\item \href{https://www.youtube.com/watch?v=eke2h9fGtu0}{\textcolor{blue}{Выступление человека из МФТИ}} также в описании к ролику приложена ссылка на \href{https://github.com/nsu-ai-team/voxforge_ru_sphinx_experiments}{\textcolor{blue}{github}}. Необходимо разобраться и потестить как работает их решение
+\item \href{https://www.youtube.com/playlist?list=PL0Ks75aof3ThkitsZbUOEQg7Ybl5kB_s3}{\textcolor{blue}{Лекции ФИВТ}} 21, 23, 25. Довольно подробно разбирается теория, также можно посмотреть домашки по курсу доступные в описании под видео
 
 \end{enumerate}
 
@@ -40,13 +125,14 @@
 
 \begin{enumerate}
 
-\item Рассчеты нейронки будут запускаться при вызове метода api, который будет callback ом возвращать рассчеты и результат. Это все сделает Матвей на голом flask 
-
-\item Если кому-то интересно понимать , что будет происходить на бэке \href{https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world}{\textcolor{blue}{Курс грустного мужика}}
-\item Обработка результаты прохождения формы
+\item Рассчеты нейронки будут запускаться при вызове метода api, который будет callback ом возвращать рассчеты и результат. Это все сделает Матвей на голом flask. Если кому-то интересно понимать , что будет происходить на бэке \href{https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world}{\textcolor{blue}{Курс грустного мужика}}
 \item Ассинхронность 
-
-
+\item Карта музея и путь от картины А до картины B. Могут возникнуть следующие трудности:
+\begin{enumerate}
+\item Как передать карту в Front и в каком формате необходимо ее хранить 
+\item Как отрисовать путь на карте и отслеживать положение пользователя на этом пути. 
+\end{enumerate}
+До хакатона нужно найти решение и желательно попробовать его как-то реализовать
 \end{enumerate}
 
 \section{Frontend}
@@ -62,17 +148,16 @@
 \section{Design + Презентация}
 \begin{enumerate}
 
-\item  Подумать над тем как это все будет выглядеть и нарисать это в какую-нибуть презентацию.
-
-\item Научиться делать 
+\item  Подумать над тем как это все будет выглядеть и нарисовать это в какую-нибуть презентацию.
 
 
 \end{enumerate}
 \section{Стикеры}
 
+Если найдутся люди, готовые помочь,  добавляйте их сюда
 \begin{enumerate}
 
-\item Договориться с кем-нибудь на счет стикеров
+\item \href{https://vk.com/sofiamarid_art}{\textcolor{blue}{Софья-Мария}}
 
 \end{enumerate}
 \section{Сервер}
@@ -83,14 +168,10 @@
 
 \end{enumerate}
 
-\section*{Задачи}
+\section*{Успехи}
 
 \begin{enumerate}
-
-\item 
-
-\item 
-
+\item Получаем QR c фоточки
 \end{enumerate}
  
 \end{document}
