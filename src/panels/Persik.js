@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Panel, PanelHeader, HeaderButton, Group, Button, ListItem, Div, platform, IOS} from '@vkontakte/vkui';
 import persik from '../img/persik.png';
-import { ReactMic } from 'react-mic';
+import { ReactMic } from '@cleandersonlobo/react-mic';
 // import './Persik.css';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
@@ -32,18 +32,20 @@ export class Persik extends React.Component {
   }
 
   onData(recordedBlob) {
-    console.log('chunk of real-time data is: ', recordedBlob);
+    // console.log('chunk of real-time data is: ', recordedBlob);
+		return null;
   }
 
   onStop(recordedBlob) {
-    console.log('recordedBlob is: ', recordedBlob);
+    // console.log('recordedBlob is: ', recordedBlob);
+		return null;
   }
 
   render() {
     return (
-			<Panel id={this.props.id}>
+			<Panel id={this.state.props.id}>
 				<PanelHeader
-					left={<HeaderButton onClick={this.props.go} data-to="home">
+					left={<HeaderButton onClick={this.state.props.go} data-to="home">
 						{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
 					</HeaderButton>}
 				>
@@ -57,7 +59,6 @@ export class Persik extends React.Component {
 							className="sound-wave"
 							onStop={this.onStop}
 							onData={this.onData}
-							height = "100"
 							width = "200"
 							strokeColor="#000000"
 							backgroundColor="#335E8F" />
