@@ -49,12 +49,18 @@
  % parbox to limit width of the listing
  \node[state] (soundGet) 
  {\begin{tabular}{l}
-  \textbf{Получение голосовухи}\\
- \end{tabular}};
+  \textbf{Получение голосовухи \href{https://www.npmjs.com/package/@cleandersonlobo/react-mic}{\textcolor{blue}{React Mic}}}
 
+ \end{tabular}};
+ 
+ % js lib
+ \node[state, below right=1.5cm and 1cm of soundGet] (recogn) 
+ {\begin{tabular}{l}
+  \textbf{\href{https://www.npmjs.com/package/react-speech-recognition}{\textcolor{blue}{React speech recognition}}}\\
+ \end{tabular}};
  % {Отчистка звука}
  \node[state,       % layout (defined above)
- node distance=1.5cm,     % distance to QUERY
+ node distance=1.2cm,     % distance to QUERY
  below of=soundGet        % Position is to the right of QUERY
 ] (soundClear)    % move 3cm in y
  {%                     % posistion relative to the center of the 'box'
@@ -66,23 +72,44 @@
  % {Выделение морфем}
  \node[state,
  below of=soundClear,
- node distance=1.5cm] (morfolize) 
+ node distance=1.2cm] (morfolize) 
  {%
  \begin{tabular}{l}
   \textbf{Выделение морфем}\\
  \end{tabular}
  };
 
- % STATE EPC
+ % NLP
  \node[state,
  below of=morfolize,
- node distance=2cm] (NLP) 
+ node distance=1.8cm] (NLP) 
  {%
  \begin{tabular}{l}
   \textbf{NLP}\\
   \parbox{5cm}{Из полученных морфем сделать слова и слова преобразовать в команды}
  \end{tabular}
  };
+ 
+  % DB
+ \node[state,
+ below of=NLP,
+ node distance=1.7cm] (DB) 
+ {%
+  \begin{tabular}{l}
+\textbf{Data Base}\\
+ \end{tabular}
+ };
+
+ % Play
+ \node[state,
+ right  of=DB,
+ node distance=5cm] (soundPlay) 
+ {%
+  \begin{tabular}{l}
+\textbf{\href{https://www.npmjs.com/package/react-sound}{\textcolor{blue}{React Sound}}}\\
+ \end{tabular}
+ };
+
 
  % draw the paths and and print some Text below/above the graph
  \path (soundGet) edge node[anchor=south,above,text width=4cm]
@@ -90,7 +117,10 @@
                    } (soundClear)
  (soundClear) edge                    (morfolize)
   (morfolize) edge                    (NLP)
-
+(soundGet) edge (recogn)
+(recogn) edge (NLP)
+(NLP) edge (DB)
+(DB) edge (soundPlay)
  ;
 \end{tikzpicture}
 
@@ -172,6 +202,7 @@
 
 \begin{enumerate}
 \item Получаем QR c фоточки
+\item Попробовали React Mic, работает везде, кроме vk mini apps
 \end{enumerate}
  
 \end{document}
