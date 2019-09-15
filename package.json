@@ -32,6 +32,8 @@
     "gh-pages": "^2.1.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
+    "react-audio-analyser": "^0.2.5",
+    "react-audio-recorder": "^2.2.0",
     "react-dom": "^16.9.0",
     "react-mic": "^12.4.1",
     "typescript": "^3.6.3",

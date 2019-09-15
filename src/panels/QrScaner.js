@@ -1,7 +1,7 @@
 import React from 'react';
 import connect from '@vkontakte/vk-connect';
 import '@vkontakte/vkui/dist/vkui.css';
-import {Panel, Group, Div, PanelHeader, HeaderButton, ListItem, platform, IOS} from '@vkontakte/vkui';
+import {Panel, Group, PanelHeader, HeaderButton, ListItem, platform, IOS} from '@vkontakte/vkui';
 import './Persik.css';
 import persik from '../img/persik.png';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';

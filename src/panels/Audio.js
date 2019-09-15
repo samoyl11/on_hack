@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Panel, PanelHeader, HeaderButton, Group, Button, ListItem, Div, platform, IOS} from '@vkontakte/vkui';
+import {Panel, PanelHeader, HeaderButton, Group, Button, Div, platform, IOS} from '@vkontakte/vkui';
 import persik from '../img/persik.png';
 import { ReactMic } from '@cleandersonlobo/react-mic';
-// import './Persik.css';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 
 const osname = platform();
 
-export class Persik extends React.Component {
+export class Audio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,9 +74,9 @@ export class Persik extends React.Component {
   }
 }
 
-Persik.propTypes = {
+Audio.propTypes = {
 	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
 };
 
-export default Persik;
+export default Audio;

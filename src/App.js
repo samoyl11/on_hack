@@ -1,11 +1,13 @@
+// import 'core-js/es6/map';
+// import 'core-js/es6/set';
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
 import { View } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 import Home from './panels/Home';
-import Persik from './panels/Persik';
 import Scaner from './panels/QrScaner';
+import Audio from './panels/Audio';
 
 class App extends React.Component {
 	constructor(props) {
@@ -39,7 +41,7 @@ class App extends React.Component {
 			<View activePanel={this.state.activePanel}>
 				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} />
 				<Scaner id="scaner" go={this.go}/>
-				<Persik id="persik" go={this.go}/>
+				<Audio id="audio" go={this.go}/>
 			</View>
 		);
 	}

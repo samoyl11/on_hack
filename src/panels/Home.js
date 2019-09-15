@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListItem, Button, Group, Div, Avatar, PanelHeader } from '@vkontakte/vkui';
-
+import './Persik.css';
 const Home = ({ id, go, fetchedUser }) => (
 	<Panel id={id}>
 		<PanelHeader>Example</PanelHeader>
@@ -22,8 +22,8 @@ const Home = ({ id, go, fetchedUser }) => (
 				</Button>
 			</Div>
 			<Div>
-				<Button size="xl" level="2" onClick={go} data-to="persik">
-					Show me the Persik, please
+				<Button size="xl" level="2" onClick={go} data-to="audio">
+					Show me the Audio, please
 				</Button>
 			</Div>
 		</Group>
