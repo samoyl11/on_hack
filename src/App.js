@@ -8,6 +8,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import Home from './panels/Home';
 import Scaner from './panels/QrScaner';
 import Audio from './panels/Audio';
+import Player from './panels/Player';
 
 class App extends React.Component {
 	constructor(props) {
@@ -42,6 +43,7 @@ class App extends React.Component {
 				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} />
 				<Scaner id="scaner" go={this.go}/>
 				<Audio id="audio" go={this.go}/>
+				<Player id="player" go={this.go}/>
 			</View>
 		);
 	}
