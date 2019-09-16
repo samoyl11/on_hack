@@ -1,6 +1,6 @@
 import React from 'react';
 import Sound from 'react-sound';
-import {Panel, PanelHeader, HeaderButton, Group, Cell, Link, Button, List, Div, platform, Checkbox, View, FormLayout, IOS} from '@vkontakte/vkui';
+import {Panel, PanelHeader, HeaderButton, Group, Cell, Link, Button, Slider, List, Div, platform, Checkbox, View, FormLayout, IOS} from '@vkontakte/vkui';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon48Pause from '@vkontakte/icons/dist/48/pause';
@@ -40,25 +40,12 @@ export default class PlayerControls extends React.Component {
 
     return (
       <Div>
-        <Div>
-        <Button onClick={this.props.onVolumeDown}>-</Button>
-        Volume
-        <Button onClick={this.props.onVolumeUp}>+</Button>
-        </Div>
         <List>
           {controls.play && <Cell before={<Icon48Play width={20} hight={20}/>}>{control('Play', this.props.onPlay)}</Cell>}
           {controls.stop && <Cell before={<Icon48Pause width={20} hight={20}/>}>{control('Stop', this.props.onStop)}</Cell>}
           {controls.pause && <Cell before={<Icon48Pause width={20} hight={20}/>}>{control('Pause', this.props.onPause)}</Cell>}
           {controls.resume && <Cell before={<Icon48Play width={20} hight={20}/>}>{control('Resume', this.props.onResume)}</Cell>}
         </List>
-        <Div>
-          Playback Rate:
-          <Button onClick={this.props.onPlaybackRateDown}>-</Button>
-          {' '}
-          {numberFormat.format(this.props.playbackRate)}
-          {' '}
-          <Button onClick={this.props.onPlaybackRateUp}>+</Button>
-        </Div>
         <FormLayout>
           <Checkbox checked={this.props.loop} onChange={this.props.onToggleLoop}> Loop?</Checkbox>
         </FormLayout>

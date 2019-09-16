@@ -4,7 +4,7 @@ import PlayerControls from './PlayerControls';
 import SongSelector from './SongSelector';
 import songs from '../audio/songs';
 import PropTypes from 'prop-types';
-import {Panel, PanelHeader, HeaderButton, Group, Button, Checkbox, FormLayout, Div, platform, IOS} from '@vkontakte/vkui';
+import {Panel, PanelHeader, HeaderButton, Group, Button, Checkbox, FormLayout, Slider, Div, platform, IOS} from '@vkontakte/vkui';
 import persik from '../img/persik.png';
 import { ReactMic } from '@cleandersonlobo/react-mic';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
@@ -17,7 +17,6 @@ class Audio extends React.Component {
     super(props);
 
     this.state = {
-      controlled: true,
       currentSong: songs[0],
       position: 0,
       volume: 100,
@@ -43,13 +42,6 @@ class Audio extends React.Component {
 
   handleSongSelected = (song) => {
     this.setState({ currentSong: song, position: 0 });
-  }
-
-  handleControlledComponentChange = (ev) => {
-    this.setState({
-      controlled: ev.target.checked,
-      position: 0
-    });
   }
 
   renderCurrentSong() {
@@ -80,10 +72,25 @@ class Audio extends React.Component {
               selectedSong={this.state.currentSong}
               onSongSelected={this.handleSongSelected}
             />
-            <FormLayout>
-              <Checkbox checked={this.state.controlled} onChange={this.handleControlledComponentChange}>Controlled Component</Checkbox>
-            </FormLayout>
             {this.state.currentSong && this.renderCurrentSong()}
+            <FormLayout>
+              <Slider
+                min={0}
+                max={100}
+                value={Number(this.state.volume)}
+                onChange={value => this.setState({volume: value})}
+                top="Volume"
+              />
+            </FormLayout>
+            <FormLayout>
+              <Slider
+                min={0}
+                max={5}
+                value={Number(this.state.playbackRate)}
+                onChange={value => this.setState({playbackRate: value})}
+                top="Playback Rate"
+              />
+            </FormLayout>
             <PlayerControls
               playStatus={this.state.playStatus}
               loop={loop}
@@ -92,50 +99,28 @@ class Audio extends React.Component {
               onResume={() => this.setState({ playStatus: Sound.status.PLAYING })}
               onStop={() => this.setState({ playStatus: Sound.status.STOPPED, position: 0 })}
               onSeek={position => this.setState({ position })}
-              onVolumeUp={() => this.setState({ volume: volume >= 100 ? volume : volume + 10 })}
-              onVolumeDown={() => this.setState({ volume: volume <= 0 ? volume : volume - 10 })}
-              onPlaybackRateUp={() => this.setState({ playbackRate: playbackRate >= 4 ? playbackRate : playbackRate + 0.5 })}
-              onPlaybackRateDown={() => this.setState({ playbackRate: playbackRate <= 0.5 ? playbackRate : playbackRate - 0.5 })}
               onToggleLoop={e => this.setState({ loop: e.target.checked })}
               duration={this.state.currentSong ? this.state.currentSong.duration : 0}
               position={this.state.position}
               playbackRate={playbackRate}
             />
-            {this.state.currentSong && (
-              this.state.controlled ? (
-                <Sound
-                  url={this.state.currentSong.url}
-                  playStatus={this.state.playStatus}
-                  position={this.state.position}
-                  volume={volume}
-                  playbackRate={playbackRate}
-                  loop={loop}
-                  onLoading={({ bytesLoaded, bytesTotal }) => console.log(`${bytesLoaded / bytesTotal * 100}% loaded`)}
-                  onLoad={() => console.log('Loaded')}
-                  onPlaying={({ position }) => this.setState({ position })}
-                  onPause={() => console.log('Paused')}
-                  onResume={() => console.log('Resumed')}
-                  onStop={() => console.log('Stopped')}
-                  onFinishedPlaying={() => this.setState({ playStatus: Sound.status.STOPPED })}
-                />
-              ) : (
-                <Sound
-                  url={this.state.currentSong.url}
-                  playStatus={this.state.playStatus}
-                  playFromPosition={this.state.position}
-                  volume={volume}
-                  playbackRate={playbackRate}
-                  loop={loop}
-                  onLoading={({ bytesLoaded, bytesTotal }) => console.log(`${bytesLoaded / bytesTotal * 100}% loaded`)}
-                  onLoad={() => console.log('Loaded')}
-                  onPlaying={({ position }) => console.log('Position', position)}
-                  onPause={() => console.log('Paused')}
-                  onResume={() => console.log('Resumed')}
-                  onStop={() => console.log('Stopped')}
-                  onFinishedPlaying={() => this.setState({ playStatus: Sound.status.STOPPED })}
-                />
-              )
-            )}
+            {this.state.currentSong &&
+              <Sound
+                url={this.state.currentSong.url}
+                playStatus={this.state.playStatus}
+                position={this.state.position}
+                volume={volume}
+                playbackRate={playbackRate}
+                loop={loop}
+                onLoading={({ bytesLoaded, bytesTotal }) => console.log(`${bytesLoaded / bytesTotal * 100}% loaded`)}
+                onLoad={() => console.log('Loaded')}
+                onPlaying={({ position }) => this.setState({ position })}
+                onPause={() => console.log('Paused')}
+                onResume={() => console.log('Resumed')}
+                onStop={() => console.log('Stopped')}
+                onFinishedPlaying={() => this.setState({ playStatus: Sound.status.STOPPED })}
+              />
+            }
           </Div>
         </Group>
       </Panel>
