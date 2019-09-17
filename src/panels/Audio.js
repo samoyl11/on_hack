@@ -5,6 +5,7 @@ import persik from '../img/persik.png';
 import { ReactMic } from '@cleandersonlobo/react-mic';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
+import soundfile from '../audio/miyagi.mp3';
 
 const osname = platform();
 

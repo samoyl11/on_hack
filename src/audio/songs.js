@@ -1,5 +1,10 @@
 export default [
   {
+    url: 'https://raw.githubusercontent.com/maximzubkov/on_hack/master/src/audio/miyagi.mp3',
+    title: 'miyagi',
+    duration: 0
+  },
+  {
     url: 'https://raw.githubusercontent.com/scottschiller/SoundManager2/master/demo/_mp3/1hz-10khz-sweep.mp3',
     title: '1hz-10khz sweep',
     duration: 0

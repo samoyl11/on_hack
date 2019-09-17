@@ -1,10 +1,11 @@
 import React from 'react';
 import Sound from 'react-sound';
+import getMP3Duration from 'get-mp3-duration';
 import PlayerControls from './PlayerControls';
 import SongSelector from './SongSelector';
 import songs from '../audio/songs';
 import PropTypes from 'prop-types';
-import {Panel, PanelHeader, HeaderButton, Group, Button, Checkbox, FormLayout, Slider, Div, platform, IOS} from '@vkontakte/vkui';
+import {Panel, PanelHeader, HeaderButton, Group, Button, Progress, InfoRow, Checkbox, FormLayout, Slider, Div, platform, IOS} from '@vkontakte/vkui';
 import persik from '../img/persik.png';
 import { ReactMic } from '@cleandersonlobo/react-mic';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
@@ -41,7 +42,7 @@ class Audio extends React.Component {
   }
 
   handleSongSelected = (song) => {
-    this.setState({ currentSong: song, position: 0 });
+    this.setState({ currentSong: song, position: 0});
   }
 
   renderCurrentSong() {
@@ -72,7 +73,11 @@ class Audio extends React.Component {
               selectedSong={this.state.currentSong}
               onSongSelected={this.handleSongSelected}
             />
-            {this.state.currentSong && this.renderCurrentSong()}
+            <Div>
+              <InfoRow title={this.state.currentSong.title}>
+                <Progress value={this.state.position/this.state.currentSong.duration * 100} />
+              </InfoRow>
+            </Div>
             <FormLayout>
               <Slider
                 min={0}
