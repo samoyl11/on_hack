@@ -13,7 +13,7 @@ import Icon24Back from '@vkontakte/icons/dist/24/back';
 
 const osname = platform();
 
-class Audio extends React.Component {
+class Player extends React.Component {
   constructor(props) {
     super(props);
 
@@ -24,7 +24,6 @@ class Audio extends React.Component {
       playbackRate: 1,
       loop: false,
       playStatus: Sound.status.PLAYING,
-      props: props,
     };
   }
 
@@ -111,9 +110,6 @@ class Audio extends React.Component {
                 onLoading={({ bytesLoaded, bytesTotal }) => console.log(`${bytesLoaded / bytesTotal * 100}% loaded`)}
                 onLoad={() => console.log('Loaded')}
                 onPlaying={({ position }) => this.setState({ position })}
-                onPause={() => console.log('Paused')}
-                onResume={() => console.log('Resumed')}
-                onStop={() => console.log('Stopped')}
                 onFinishedPlaying={() => this.setState({ playStatus: Sound.status.STOPPED })}
               />
             }
@@ -124,9 +120,9 @@ class Audio extends React.Component {
 }
 
 
-Audio.propTypes = {
+Player.propTypes = {
 	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
 };
 
-export default Audio;
+export default Player;
