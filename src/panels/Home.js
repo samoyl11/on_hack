@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListItem, Button, Group, Div, Avatar, PanelHeader } from '@vkontakte/vkui';
 import './Persik.css';
-const Home = ({ id, go, fetchedUser }) => (
+
+const Home = ({ id, go, fetchedUser, player }) => (
 	<Panel id={id}>
 		<PanelHeader>Example</PanelHeader>
 		{fetchedUser &&
@@ -26,12 +27,8 @@ const Home = ({ id, go, fetchedUser }) => (
 					Show me the Audio, please
 				</Button>
 			</Div>
-			<Div>
-				<Button size="xl" level="2" onClick={go} data-to="player">
-					Show me the Player, please
-				</Button>
-			</Div>
 		</Group>
+		{player}
 	</Panel>
 );
 

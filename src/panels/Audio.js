@@ -70,6 +70,7 @@ export class Audio extends React.Component {
 						</Div>
 					</Div>
 				</Group>
+        {this.props.player}
 			</Panel>
     );
   }

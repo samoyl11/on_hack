@@ -57,15 +57,6 @@ class Audio extends React.Component {
     const { volume, playbackRate, loop } = this.state;
 
     return (
-      <Panel id={this.state.props.id}>
-        <PanelHeader
-          left={<HeaderButton onClick={this.state.props.go} data-to="home">
-            {osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
-          </HeaderButton>}
-        >
-          Persik
-        </PanelHeader>
-        <img className="Persik" src={persik} alt="Persik The Cat"/>
         <Group title="Player">
           <Div>
             <SongSelector
@@ -128,7 +119,6 @@ class Audio extends React.Component {
             }
           </Div>
         </Group>
-      </Panel>
     );
   }
 }

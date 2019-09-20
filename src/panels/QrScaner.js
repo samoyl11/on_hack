@@ -50,6 +50,7 @@ class Scaner extends React.Component {
             {`DDDATA ${this.state.qrData}`}
           </ListItem>}
         </Group>
+        {this.props.player}
     	</Panel>
     );
   }
