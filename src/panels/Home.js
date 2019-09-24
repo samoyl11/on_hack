@@ -27,6 +27,11 @@ const Home = ({ id, go, fetchedUser, player }) => (
 					Show me the Audio, please
 				</Button>
 			</Div>
+			<Div>
+				<Button size="xl" level="2" onClick={go} data-to="geo">
+					Show me the Geo, please
+				</Button>
+			</Div>
 		</Group>
 		{player}
 	</Panel>

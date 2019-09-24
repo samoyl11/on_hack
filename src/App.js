@@ -19,7 +19,7 @@ import Home from './panels/Home';
 import Scaner from './panels/QrScaner';
 import Audio from './panels/Audio';
 import Player from './panels/Player';
-
+import Geo from './panels/Geo';
 const MODAL_PAGE_MUSIC = 'music';
 
 const osname = platform();
@@ -206,6 +206,7 @@ class App extends React.Component {
 			<View activePanel={this.state.activePanel} modal={modal}>
 				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} player={audioPlayer}/>
 				<Scaner id="scaner" go={this.go} player={audioPlayer}/>
+				<Geo id="geo" go={this.go} player={audioPlayer}/>
 				<Audio id="audio" go={this.go} player={audioPlayer}/>
 			</View>
 		);
