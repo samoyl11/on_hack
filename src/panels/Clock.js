@@ -2,7 +2,7 @@ import React from 'react';
 import connect from '@vkontakte/vk-connect';
 import '@vkontakte/vkui/dist/vkui.css';
 import {Panel, Group,Cell, PanelHeader, HeaderButton,
-  ListItem, Tabs, TabsItem, HorizontalScroll,
+  ListItem, Tabs, TabsItem, HorizontalScroll, Div,
   Counter, platform, IOS} from '@vkontakte/vkui';
 import './Persik.css';
 import persik from '../img/persik.png';
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 
 const osname = platform();
 function FormattedDate(props) {
-  return <h2>lihsdgl {props.date.toLocaleTimeString()}.</h2>;
+  return props.date.toLocaleTimeString()
 }
 
 class Clock extends React.Component {
@@ -40,10 +40,10 @@ class Clock extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Твое время:</h1>
+      <Div>
+        Твое время:
         <FormattedDate date={this.state.date} />
-      </div>
+      </Div>
     );
   }
 }

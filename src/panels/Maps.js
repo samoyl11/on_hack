@@ -7,36 +7,61 @@ import persik from '../img/persik.png';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import PropTypes from 'prop-types';
-import { YMaps, Map } from 'react-yandex-maps';
+import Clock from './Clock'
+import { YMaps, Map, Placemark } from 'react-yandex-maps';
 
 const osname = platform();
+
+function FormattedGeo(props) {
+  return <Div> long: {props.data.long}, lat: {props.data.lat}. </Div>
+}
 
 class Maps extends React.Component {
   constructor(props) {
   super(props);
     this.state = {
-      type: 111,
-      available: 0,
-      long: 22,
-      lat: 53,
+      firstEntry: true, // Решает баг с постоянно всплывающим предложением разрешить доступ к гео
+      lat: 0,
+      long: 0,
+      currentGeo: null,
+      coordinates: null,
     };
- }
-
+  }
 
   componentDidMount() {
-  connect.subscribe((e) => {
-   switch (e.detail.type) {
-    case 'VKWebAppGeodataResult':
-     this.setState({ available: e.detail.data.available,
+    if (this.state.firstEntry){  //При первом посещении mini app окошко с предложением "Разрешить доступ к гео" будет всплывать каждую секнуду
+      this.tick()
+    } else {
+      this.timerID = setInterval(
+        () => this.tick(),
+        1000
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    connect.subscribe((e) => {
+			switch (e.detail.type) {
+				case 'VKWebAppGeodataResult':
+					this.setState({
+            currentGeo : { center: [e.detail.data.lat, e.detail.data.long], zoom: 15 },
+            coordinates : [[e.detail.data.lat, e.detail.data.long]],
             lat: e.detail.data.lat,
-            long: e.detail.data.long});
-     break;
-    default:
-     console.log(e.detail.type);
-   }
-  });
+            long: e.detail.data.long,
+            firstEntry: false,
+          });
+					break;
+				default:
+					console.log(e.detail.type);
+			}
+		});
     connect.send("VKWebAppGetGeodata", {});
- }
+  }
+
 
   render(){
     return (
@@ -46,16 +71,19 @@ class Maps extends React.Component {
         {osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
        </HeaderButton>}
       >
-       Ну шо?
+      Время и Гео
       </PanelHeader>
 
         <Group title="QR Data Fetched with VK Connect">
-          <YMaps>
+          <Clock/>
+          {this.state.currentGeo && <FormattedGeo data = {this.state} />}
+          {this.state.currentGeo && <YMaps>
             <Div>
-              My awesome application with maps!
-              <Map defaultState={{ center: [this.state.long, this.state.lat], zoom: 9 }} />
+              <Map defaultState={this.state.currentGeo}>
+                {this.state.coordinates.map(coordinate=> (<Placemark geometry={coordinate} />))}
+              </Map>
             </Div>
-          </YMaps>
+          </YMaps>}
         </Group>
         {this.props.player}
      </Panel>
