@@ -10,6 +10,8 @@ import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import PropTypes from 'prop-types';
 import Clock from './Clock.js';
+import Geo_online from './Geo_online.js';
+
 
 const osname = platform();
 
@@ -52,12 +54,16 @@ class Geo extends React.Component {
     				{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
     			</HeaderButton>}
     		>
-    			Ну шо?
+    			Геопозиция
     		</PanelHeader>
         <Clock />
+        <Geo_online />
         <Group title="QR Data Fetched with VK Connect">
           {<Cell>
-            {`Ты тут ${this.state.lat}`}
+            {`Широта:${this.state.lat}`}
+          </Cell>}
+          {<Cell>
+            {`Долгота: ${this.state.long}`}
           </Cell>}
         </Group>
         <Group>

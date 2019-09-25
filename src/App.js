@@ -18,7 +18,10 @@ import SongSelector from './panels/SongSelector';
 import Home from './panels/Home';
 import Scaner from './panels/QrScaner';
 import Audio from './panels/Audio';
-import Player from './panels/Player';
+import Maps from './panels/Maps';
+
+
+
 import Geo from './panels/Geo';
 const MODAL_PAGE_MUSIC = 'music';
 
@@ -175,12 +178,7 @@ class App extends React.Component {
 				</ModalPage>
 			</ModalRoot>
 		);
-		const clock = (
-    <div>
-      <h1>Привет, мир!</h1>
-      <h2>Сейчас {new Date().toLocaleTimeString()}.</h2>
-    </div>
-  	);
+
 		const audioPlayer = (
 			<Group>
 				<Div>
@@ -208,11 +206,12 @@ class App extends React.Component {
 		);
 
 		return (
-			<View activePanel={this.state.activePanel} modal={clock}>
+			<View activePanel={this.state.activePanel} modal={modal}>
 				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} player={audioPlayer}/>
 				<Scaner id="scaner" go={this.go} player={audioPlayer}/>
 				<Geo id="geo" go={this.go} player={audioPlayer}/>
 				<Audio id="audio" go={this.go} player={audioPlayer}/>
+				<Maps id="maps" go={this.go} player={audioPlayer}/>
 
 			</View>
 		);
