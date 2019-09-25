@@ -18,7 +18,7 @@ function FormattedGeo(props) {
 
 class Maps extends React.Component {
   constructor(props) {
-  super(props);
+    super(props);
     this.state = {
       firstEntry: true, // Решает баг с постоянно всплывающим предложением разрешить доступ к гео
       lat: 0,
@@ -26,17 +26,30 @@ class Maps extends React.Component {
       currentGeo: null,
       coordinates: null,
     };
-  }
 
+    connect.subscribe((e) => {
+      switch (e.detail.type) {
+        case 'VKWebAppGeodataResult':
+          this.setState({
+            lat: e.detail.data.lat,
+            long: e.detail.data.long,
+            firstEntry: false,
+            currentGeo : { center: [e.detail.data.lat, e.detail.data.long], zoom: 15 },
+            coordinates : [[e.detail.data.lat, e.detail.data.long]],
+          });
+          break;
+        default:
+          console.log("error");
+      }
+      connect.send("VKWebAppGetGeodata", {});
+    });
+
+  }
   componentDidMount() {
-    if (this.state.firstEntry){  //При первом посещении mini app окошко с предложением "Разрешить доступ к гео" будет всплывать каждую секнуду
-      this.tick()
-    } else {
-      this.timerID = setInterval(
-        () => this.tick(),
-        1000
-      );
-    }
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
   }
 
   componentWillUnmount() {
@@ -44,21 +57,6 @@ class Maps extends React.Component {
   }
 
   tick() {
-    connect.subscribe((e) => {
-			switch (e.detail.type) {
-				case 'VKWebAppGeodataResult':
-					this.setState({
-            currentGeo : { center: [e.detail.data.lat, e.detail.data.long], zoom: 15 },
-            coordinates : [[e.detail.data.lat, e.detail.data.long]],
-            lat: e.detail.data.lat,
-            long: e.detail.data.long,
-            firstEntry: false,
-          });
-					break;
-				default:
-					console.log(e.detail.type);
-			}
-		});
     connect.send("VKWebAppGetGeodata", {});
   }
 
@@ -71,16 +69,16 @@ class Maps extends React.Component {
         {osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
        </HeaderButton>}
       >
-      Время и Гео
+      Время и Гео1
       </PanelHeader>
 
-        <Group title="QR Data Fetched with VK Connect">
+        <Group title="Map Fetched from Yandex API">
           <Clock/>
           {this.state.currentGeo && <FormattedGeo data = {this.state} />}
           {this.state.currentGeo && <YMaps>
             <Div>
               <Map defaultState={this.state.currentGeo}>
-                {this.state.coordinates.map(coordinate=> (<Placemark geometry={coordinate} />))}
+                {this.state.coordinates.map(coordinate => (<Placemark geometry={coordinate} />))}
               </Map>
             </Div>
           </YMaps>}
