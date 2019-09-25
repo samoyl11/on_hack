@@ -175,7 +175,12 @@ class App extends React.Component {
 				</ModalPage>
 			</ModalRoot>
 		);
-
+		const clock = (
+    <div>
+      <h1>Привет, мир!</h1>
+      <h2>Сейчас {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  	);
 		const audioPlayer = (
 			<Group>
 				<Div>
@@ -203,11 +208,12 @@ class App extends React.Component {
 		);
 
 		return (
-			<View activePanel={this.state.activePanel} modal={modal}>
+			<View activePanel={this.state.activePanel} modal={clock}>
 				<Home id="home" fetchedUser={this.state.fetchedUser} go={this.go} player={audioPlayer}/>
 				<Scaner id="scaner" go={this.go} player={audioPlayer}/>
 				<Geo id="geo" go={this.go} player={audioPlayer}/>
 				<Audio id="audio" go={this.go} player={audioPlayer}/>
+
 			</View>
 		);
 	}
