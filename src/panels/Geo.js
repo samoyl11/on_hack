@@ -1,12 +1,17 @@
 import React from 'react';
 import connect from '@vkontakte/vk-connect';
 import '@vkontakte/vkui/dist/vkui.css';
-import {Panel, Group,Cell, PanelHeader, HeaderButton, ListItem, platform, IOS} from '@vkontakte/vkui';
+import {Panel, Group,Cell, PanelHeader, HeaderButton,
+  ListItem, Tabs, TabsItem, HorizontalScroll,
+  Counter, platform, IOS} from '@vkontakte/vkui';
 import './Persik.css';
 import persik from '../img/persik.png';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import PropTypes from 'prop-types';
+import Clock from './Clock.js';
+import Geo_online from './Geo_online.js';
+
 
 const osname = platform();
 
@@ -49,14 +54,37 @@ class Geo extends React.Component {
     				{osname === IOS ? <Icon28ChevronBack/> : <Icon24Back/>}
     			</HeaderButton>}
     		>
-    			Ну шо?
+    			Геопозиция
     		</PanelHeader>
-
+        <Clock />
+        <Geo_online />
         <Group title="QR Data Fetched with VK Connect">
           {<Cell>
-            {`Ты тут ${this.state.lat}`}
+            {`Широта:${this.state.lat}`}
+          </Cell>}
+          {<Cell>
+            {`Долгота: ${this.state.long}`}
           </Cell>}
         </Group>
+        <Group>
+         <Tabs theme="header" type="buttons">
+           <HorizontalScroll>
+             <TabsItem after={<Counter>8</Counter>}>
+               Все
+             </TabsItem>
+             <TabsItem selected after={<Counter>24</Counter>}>
+               Люди
+             </TabsItem>
+             <TabsItem after={<Counter>2</Counter>}>
+               Сообщества
+             </TabsItem>
+             <TabsItem>
+               Музыка
+             </TabsItem>
+           </HorizontalScroll>
+         </Tabs>
+       </Group>
+
         {this.props.player}
     	</Panel>
     );

@@ -18,7 +18,10 @@ import SongSelector from './panels/SongSelector';
 import Home from './panels/Home';
 import Scaner from './panels/QrScaner';
 import Audio from './panels/Audio';
-import Player from './panels/Player';
+import Maps from './panels/Maps';
+
+
+
 import Geo from './panels/Geo';
 const MODAL_PAGE_MUSIC = 'music';
 
@@ -208,6 +211,8 @@ class App extends React.Component {
 				<Scaner id="scaner" go={this.go} player={audioPlayer}/>
 				<Geo id="geo" go={this.go} player={audioPlayer}/>
 				<Audio id="audio" go={this.go} player={audioPlayer}/>
+				<Maps id="maps" go={this.go} player={audioPlayer}/>
+
 			</View>
 		);
 	}
